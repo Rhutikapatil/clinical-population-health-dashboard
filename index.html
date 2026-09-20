@@ -1,0 +1,467 @@
+<title>Population Health Panel</title>
+<style>
+  :root{
+    --accent:#2a78d6;
+    --accent-deep:#184f95;
+    --accent-soft:#cde2fb;
+    --ink:#101b24;
+    --ink-soft:#55606b;
+    --muted:#8a94a0;
+    --bg:#f5f7f8;
+    --surface:#ffffff;
+    --line:#e2e6e9;
+    --good:#0ca30c;
+    --warning:#c98500;
+    --serious:#d0532b;
+    --good-fill:#0ca30c;
+    --warning-fill:#eda100;
+    --serious-fill:#ec835a;
+    --series-2:#eb6834;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --accent:#3987e5;
+      --accent-deep:#86b6ef;
+      --accent-soft:#184f95;
+      --ink:#f2f4f6;
+      --ink-soft:#c3cad1;
+      --muted:#8a94a0;
+      --bg:#0c1116;
+      --surface:#151b21;
+      --line:#262e35;
+      --good:#0ca30c;
+      --warning:#e0a326;
+      --serious:#e66767;
+      --good-fill:#0ca30c;
+      --warning-fill:#c98500;
+      --serious-fill:#e66767;
+      --series-2:#d95926;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --accent:#3987e5;
+    --accent-deep:#86b6ef;
+    --accent-soft:#184f95;
+    --ink:#f2f4f6;
+    --ink-soft:#c3cad1;
+    --muted:#8a94a0;
+    --bg:#0c1116;
+    --surface:#151b21;
+    --line:#262e35;
+    --good:#0ca30c;
+    --warning:#e0a326;
+    --serious:#e66767;
+    --good-fill:#0ca30c;
+    --warning-fill:#c98500;
+    --serious-fill:#e66767;
+    --series-2:#d95926;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding-inline:20px;
+    padding-block:24px 48px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  h1,h2,h3{text-wrap:balance;margin:0;}
+  .tabular{font-variant-numeric:tabular-nums;}
+  .mono{font-family:"IBM Plex Mono", ui-monospace, monospace;}
+
+  header.top{
+    display:flex;flex-wrap:wrap;gap:16px 28px;justify-content:space-between;align-items:flex-end;
+    padding-bottom:18px;margin-bottom:22px;border-bottom:1px solid var(--line);
+  }
+  .titleblock{display:flex;flex-direction:column;gap:6px;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+    font-weight:600;
+  }
+  h1{font-size:26px;font-weight:650;letter-spacing:-.01em;}
+  .subtitle{color:var(--ink-soft);font-size:14.5px;max-width:56ch;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;}
+  .badge{
+    font-size:11.5px;font-weight:600;letter-spacing:.02em;padding:5px 10px;border-radius:999px;
+    border:1px solid var(--line);color:var(--ink-soft);white-space:nowrap;
+  }
+  .badge.data-note{color:var(--warning);border-color:color-mix(in srgb, var(--warning) 40%, var(--line));}
+  .badge.range{color:var(--ink-soft);font-family:"IBM Plex Mono", monospace;}
+
+  .kpi-row{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:26px;
+  }
+  .kpi{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:14px 14px 12px;display:flex;flex-direction:column;gap:6px;min-width:0;
+  }
+  .kpi .label{font-size:11.5px;color:var(--ink-soft);font-weight:600;letter-spacing:.01em;line-height:1.3;}
+  .kpi .value{font-size:24px;font-weight:650;letter-spacing:-.01em;}
+  .kpi .value small{font-size:14px;font-weight:600;color:var(--ink-soft);}
+  .kpi .delta{font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:4px;}
+  .kpi .delta.good{color:var(--good);}
+  .kpi .delta.serious{color:var(--serious);}
+  .kpi .delta.neutral{color:var(--muted);}
+
+  .grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  }
+  .grid .span2{grid-column:1 / -1;}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px 16px;display:flex;flex-direction:column;gap:10px;min-width:0;
+  }
+  .card-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .card h3{font-size:14.5px;font-weight:650;}
+  .card .insight{font-size:12.5px;color:var(--ink-soft);line-height:1.4;}
+  .card .foot{font-size:11.5px;color:var(--muted);margin-top:2px;}
+
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-soft);}
+  .legend .item{display:flex;align-items:center;gap:6px;}
+  .legend .swatch{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  svg.chart{width:100%;height:auto;overflow:visible;}
+  .gridline{stroke:var(--line);stroke-width:1;}
+  .axislabel{fill:var(--muted);font-size:10.5px;font-family:"IBM Plex Mono", monospace;}
+  .barlabel{fill:var(--ink-soft);font-size:11.5px;}
+  .barvalue{fill:var(--ink);font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .bar{transition:opacity .12s ease;cursor:pointer;}
+  .bar:hover{opacity:.82;}
+  .targetline{stroke:var(--serious);stroke-width:1.5;stroke-dasharray:4 3;}
+  .targetlabel{fill:var(--serious);font-size:10px;font-weight:600;}
+
+  .tooltip{
+    position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);
+    font-size:12px;padding:7px 10px;border-radius:7px;line-height:1.45;
+    box-shadow:0 6px 20px rgba(0,0,0,.18);opacity:0;transform:translate(-50%,-115%);
+    transition:opacity .1s ease;z-index:50;white-space:nowrap;
+  }
+  :root[data-theme="dark"] .tooltip, @media (prefers-color-scheme:dark){.tooltip{background:var(--surface);color:var(--ink);border:1px solid var(--line);}}
+  .tooltip.show{opacity:1;}
+  .tooltip .t-title{font-weight:650;margin-bottom:2px;}
+
+  .linepoint{cursor:pointer;}
+  .crosshair{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3;opacity:0;}
+
+  footer.page{
+    margin-top:30px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  @media (max-width: 900px){
+    .kpi-row{grid-template-columns:repeat(3,1fr);}
+    .grid{grid-template-columns:1fr;}
+  }
+  @media (max-width: 560px){
+    .kpi-row{grid-template-columns:repeat(2,1fr);}
+    h1{font-size:22px;}
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;650;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<div class="wrap">
+  <header class="top">
+    <div class="titleblock">
+      <span class="eyebrow">Care Management &middot; Population Health</span>
+      <h1>Patient Panel Overview</h1>
+      <p class="subtitle">Chronic disease burden, utilization, cost, and preventive-care gap closure across a
+        6,000-patient panel &mdash; built as a Power BI / Tableau data-model preview.</p>
+    </div>
+    <div class="badges">
+      <span class="badge range">Oct 2024 &ndash; Sep 2026</span>
+      <span class="badge">6,000 patients</span>
+      <span class="badge data-note">Synthetic data &mdash; see footer</span>
+    </div>
+  </header>
+
+  <section class="kpi-row" id="kpiRow"></section>
+
+  <section class="grid">
+    <div class="card">
+      <div class="card-head">
+        <h3>Chronic condition prevalence</h3>
+      </div>
+      <p class="insight">Hypertension and obesity are the two most common conditions in the panel &mdash; both
+        common comorbidity drivers of downstream cardiometabolic cost.</p>
+      <div id="chartPrevalence"></div>
+      <p class="foot">% of panel with an active diagnosis on file. Patients may have more than one condition.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>Risk tier distribution &amp; cost</h3>
+      </div>
+      <p class="insight">The highest-risk 10.5% of the panel accounts for a disproportionate share of monthly
+        cost &mdash; the standard case for targeted care-management outreach.</p>
+      <div id="chartRiskCost"></div>
+      <div class="legend">
+        <span class="item"><span class="swatch" style="background:var(--good-fill)"></span>Low risk</span>
+        <span class="item"><span class="swatch" style="background:var(--warning-fill)"></span>Medium risk</span>
+        <span class="item"><span class="swatch" style="background:var(--serious-fill)"></span>High risk</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Monthly ED visits &amp; admissions</h3></div>
+      <p class="insight">Both utilization measures hold roughly flat across the 24-month window, with ED visits
+        consistently outpacing inpatient admissions by roughly 4:1.</p>
+      <div id="chartUtilTrend"></div>
+      <div class="legend">
+        <span class="item"><span class="swatch" style="background:var(--accent)"></span>ED visits</span>
+        <span class="item"><span class="swatch" style="background:var(--series-2)"></span>Admissions</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Average PMPM cost trend</h3></div>
+      <p class="insight">Per-member-per-month cost is stable around $355, consistent with the flat utilization
+        trend at left &mdash; no seasonal cost spike over the 24-month window.</p>
+      <div id="chartCostTrend"></div>
+    </div>
+
+    <div class="card span2">
+      <div class="card-head">
+        <h3>Preventive care gap closure by measure</h3>
+        <span class="foot">Dashed line marks an illustrative 80% closure target</span>
+      </div>
+      <p class="insight">All seven measures sit 11&ndash;15 points under target, with colorectal cancer
+        screening and blood-pressure control furthest behind &mdash; the two measures a targeted outreach
+        campaign would prioritize first.</p>
+      <div id="chartGaps"></div>
+    </div>
+  </section>
+
+  <footer class="page">
+    <span>Data note: this dataset is fully synthetic, generated to demonstrate the dashboard's data model and
+      analytics &mdash; it does not describe any real patient, panel, or organization. Prevalence and cost
+      patterns are calibrated to published population-health ranges. See the project README for the openFDA-style
+      data-source note and the Power BI / Tableau build guide.</span>
+  </footer>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const DATA = {"kpis":{"total_patients":6000,"pct_high_risk":10.5,"avg_pmpm_cost":354.75,"readmission_rate_30d":14.9,"ed_visits_per_1000_per_month":71.0,"care_gap_closure_rate":67.2},"condition_prevalence":[{"condition":"Hypertension","pct":43.7},{"condition":"Obesity","pct":37.1},{"condition":"Diabetes","pct":25.5},{"condition":"Depression","pct":25.0},{"condition":"Asthma","pct":22.0},{"condition":"COPD","pct":18.6},{"condition":"CKD","pct":17.3},{"condition":"CHF","pct":16.4}],"risk_tier_counts":{"Low":2969,"Medium":2399,"High":632},"monthly_trend":[{"month":"2024-10","ed_visits":423,"admissions":117,"avg_pmpm_cost":356.2843250923558},{"month":"2024-11","ed_visits":401,"admissions":114,"avg_pmpm_cost":353.3217979113745},{"month":"2024-12","ed_visits":454,"admissions":98,"avg_pmpm_cost":355.63330835414934},{"month":"2025-01","ed_visits":403,"admissions":101,"avg_pmpm_cost":353.4943092010384},{"month":"2025-02","ed_visits":410,"admissions":113,"avg_pmpm_cost":357.841002556092},{"month":"2025-03","ed_visits":399,"admissions":104,"avg_pmpm_cost":353.9273304964539},{"month":"2025-04","ed_visits":410,"admissions":102,"avg_pmpm_cost":356.6750086306099},{"month":"2025-05","ed_visits":463,"admissions":91,"avg_pmpm_cost":355.73836209335224},{"month":"2025-06","ed_visits":452,"admissions":118,"avg_pmpm_cost":355.14898612291137},{"month":"2025-07","ed_visits":413,"admissions":127,"avg_pmpm_cost":356.3823757677275},{"month":"2025-08","ed_visits":451,"admissions":114,"avg_pmpm_cost":354.7062545761757},{"month":"2025-09","ed_visits":446,"admissions":111,"avg_pmpm_cost":355.3328108260502},{"month":"2025-10","ed_visits":424,"admissions":88,"avg_pmpm_cost":351.60578403216545},{"month":"2025-11","ed_visits":428,"admissions":75,"avg_pmpm_cost":354.7797670502386},{"month":"2025-12","ed_visits":460,"admissions":101,"avg_pmpm_cost":359.19219630156476},{"month":"2026-01","ed_visits":432,"admissions":98,"avg_pmpm_cost":354.44292160180487},{"month":"2026-02","ed_visits":425,"admissions":105,"avg_pmpm_cost":354.59602101675665},{"month":"2026-03","ed_visits":409,"admissions":108,"avg_pmpm_cost":357.04672444183313},{"month":"2026-04","ed_visits":427,"admissions":99,"avg_pmpm_cost":351.15767943262415},{"month":"2026-05","ed_visits":409,"admissions":97,"avg_pmpm_cost":358.06493201133145},{"month":"2026-06","ed_visits":419,"admissions":92,"avg_pmpm_cost":351.8810213980029},{"month":"2026-07","ed_visits":410,"admissions":90,"avg_pmpm_cost":349.62455420322675},{"month":"2026-08","ed_visits":428,"admissions":124,"avg_pmpm_cost":353.1918049615055},{"month":"2026-09","ed_visits":429,"admissions":99,"avg_pmpm_cost":353.91174643874643}],"cost_by_tier":{"Low":166.94,"Medium":411.45,"High":924.52},"gap_by_measure":{"Colorectal cancer screening (45-75)":65.1,"Blood pressure control (hypertensive)":65.1,"Annual wellness visit":66.4,"HbA1c screening (diabetics)":67.7,"Mammography (50-74F)":68.3,"Annual eye exam (diabetics)":69.0,"Statin therapy (high CV risk)":69.0},"gap_by_tier":{"Low":74.1,"Medium":63.0,"High":50.5}};
+
+const tooltipEl = document.getElementById('tooltip');
+function showTooltip(evt, html){
+  tooltipEl.innerHTML = html;
+  tooltipEl.style.left = evt.clientX + 'px';
+  tooltipEl.style.top = evt.clientY + 'px';
+  tooltipEl.classList.add('show');
+}
+function hideTooltip(){ tooltipEl.classList.remove('show'); }
+
+const svgNS = "http://www.w3.org/2000/svg";
+function el(tag, attrs){
+  const e = document.createElementNS(svgNS, tag);
+  for(const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+// ---------- KPI row ----------
+const kpis = [
+  {label:'Total patients', value: DATA.kpis.total_patients.toLocaleString(), sub:''},
+  {label:'High-risk share', value: DATA.kpis.pct_high_risk + '%', sub:'of panel', tone:'serious'},
+  {label:'Avg PMPM cost', value: '$' + DATA.kpis.avg_pmpm_cost.toFixed(0), sub:'per member/month'},
+  {label:'30-day readmission rate', value: DATA.kpis.readmission_rate_30d + '%', sub:'of admissions', tone:'serious'},
+  {label:'ED visits / 1,000 / mo', value: DATA.kpis.ed_visits_per_1000_per_month, sub:''},
+  {label:'Care gap closure', value: DATA.kpis.care_gap_closure_rate + '%', sub:'vs. 80% target', tone:'serious'},
+];
+const kpiRow = document.getElementById('kpiRow');
+kpis.forEach(k=>{
+  const div = document.createElement('div');
+  div.className = 'kpi';
+  div.innerHTML = `<span class="label">${k.label}</span><span class="value tabular">${k.value}</span>` +
+    (k.sub ? `<span class="delta ${k.tone||'neutral'}">${k.sub}</span>` : '');
+  kpiRow.appendChild(div);
+});
+
+// ---------- Horizontal bar chart (prevalence / gaps) ----------
+function horizontalBarChart(containerId, items, opts){
+  opts = opts || {};
+  const W = 640, rowH = 30, padL = opts.padL || 190, padR = 54, padTop = 8;
+  const H = padTop + items.length * rowH + 6;
+  const maxVal = opts.maxVal || Math.max(...items.map(d=>d.value)) * 1.15;
+  const svg = el('svg', {class:'chart', viewBox:`0 0 ${W} ${H}`, preserveAspectRatio:'xMinYMin meet'});
+
+  // gridlines
+  const ticks = opts.ticks || [0, 0.25, 0.5, 0.75, 1];
+  ticks.forEach(t=>{
+    const x = padL + t*(W-padL-padR);
+    svg.appendChild(el('line', {class:'gridline', x1:x, x2:x, y1:padTop-2, y2:H-4}));
+    const lbl = el('text', {class:'axislabel', x:x, y:H, 'text-anchor':'middle'});
+    lbl.textContent = opts.tickFmt ? opts.tickFmt(t*maxVal) : Math.round(t*maxVal)+'%';
+    svg.appendChild(lbl);
+  });
+
+  items.forEach((d,i)=>{
+    const y = padTop + i*rowH;
+    const barW = Math.max(2, (d.value/maxVal) * (W-padL-padR));
+    const label = el('text', {class:'barlabel', x:padL-10, y:y+rowH/2+4, 'text-anchor':'end'});
+    label.textContent = d.label;
+    svg.appendChild(label);
+
+    const bar = el('rect', {class:'bar', x:padL, y:y+5, width:barW, height:rowH-12, rx:4,
+      fill: d.color || 'var(--accent)'});
+    bar.addEventListener('mousemove', e=>showTooltip(e, `<div class="t-title">${d.label}</div>${opts.tooltipFmt ? opts.tooltipFmt(d) : d.value}`));
+    bar.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(bar);
+
+    const val = el('text', {class:'barvalue', x:padL+barW+8, y:y+rowH/2+4});
+    val.textContent = opts.valueFmt ? opts.valueFmt(d.value) : d.value;
+    svg.appendChild(val);
+  });
+
+  if(opts.targetLine !== undefined){
+    const x = padL + (opts.targetLine/maxVal)*(W-padL-padR);
+    svg.appendChild(el('line', {class:'targetline', x1:x, x2:x, y1:padTop-2, y2:H-16}));
+    const tl = el('text', {class:'targetlabel', x:x, y:padTop-4 < 10 ? 10 : padTop-4, 'text-anchor':'middle'});
+    tl.textContent = opts.targetLine + '% target';
+    svg.insertBefore(tl, svg.firstChild);
+  }
+
+  document.getElementById(containerId).appendChild(svg);
+}
+
+horizontalBarChart('chartPrevalence',
+  DATA.condition_prevalence.map(d=>({label:d.condition, value:d.pct})),
+  {valueFmt:v=>v.toFixed(1)+'%', maxVal:50, ticks:[0,0.2,0.4,0.6,0.8,1],
+   tooltipFmt:d=>`${d.value.toFixed(1)}% of panel (${Math.round(d.value/100*DATA.kpis.total_patients).toLocaleString()} patients)`});
+
+const gapItems = Object.entries(DATA.gap_by_measure).sort((a,b)=>a[1]-b[1]).map(([k,v])=>({label:k, value:v}));
+horizontalBarChart('chartGaps', gapItems, {
+  padL:260, maxVal:100, ticks:[0,0.2,0.4,0.6,0.8,1], targetLine:80,
+  valueFmt:v=>v.toFixed(1)+'%', tooltipFmt:d=>`${d.value.toFixed(1)}% closed &middot; ${(80-d.value).toFixed(1)} pts below target`
+});
+
+// ---------- Vertical bar chart (risk tier + cost) ----------
+function verticalBarChart(containerId, items, opts){
+  opts = opts || {};
+  const W = 300, H = 190, padL = 46, padR = 10, padTop = 14, padBottom = 26;
+  const plotH = H - padTop - padBottom;
+  const maxVal = opts.maxVal || Math.max(...items.map(d=>d.value))*1.15;
+  const bw = (W - padL - padR) / items.length;
+  const svg = el('svg', {class:'chart', viewBox:`0 0 ${W} ${H}`, preserveAspectRatio:'xMinYMin meet'});
+
+  [0,0.5,1].forEach(t=>{
+    const y = padTop + plotH*(1-t);
+    svg.appendChild(el('line', {class:'gridline', x1:padL, x2:W-padR, y1:y, y2:y}));
+    const lbl = el('text', {class:'axislabel', x:padL-6, y:y+3, 'text-anchor':'end'});
+    lbl.textContent = opts.tickFmt ? opts.tickFmt(t*maxVal) : Math.round(t*maxVal);
+    svg.appendChild(lbl);
+  });
+
+  items.forEach((d,i)=>{
+    const x = padL + i*bw;
+    const barH = (d.value/maxVal) * plotH;
+    const bar = el('rect', {class:'bar', x:x+bw*0.18, y:padTop+plotH-barH, width:bw*0.64, height:Math.max(1,barH),
+      rx:4, fill:d.color});
+    bar.addEventListener('mousemove', e=>showTooltip(e, `<div class="t-title">${d.label}</div>${opts.tooltipFmt(d)}`));
+    bar.addEventListener('mouseleave', hideTooltip);
+    svg.appendChild(bar);
+
+    const val = el('text', {class:'barvalue', x:x+bw/2, y:padTop+plotH-barH-6, 'text-anchor':'middle'});
+    val.textContent = opts.valueFmt(d.value);
+    svg.appendChild(val);
+
+    const lbl = el('text', {class:'axislabel', x:x+bw/2, y:H-8, 'text-anchor':'middle'});
+    lbl.textContent = d.label;
+    svg.appendChild(lbl);
+  });
+
+  document.getElementById(containerId).appendChild(svg);
+}
+
+const tierColors = {Low:'var(--good-fill)', Medium:'var(--warning-fill)', High:'var(--serious-fill)'};
+const riskCostWrap = document.createElement('div');
+riskCostWrap.style.display = 'grid';
+riskCostWrap.style.gridTemplateColumns = '1fr 1fr';
+riskCostWrap.style.gap = '4px';
+const subA = document.createElement('div'); subA.id = 'chartRiskCount';
+const subB = document.createElement('div'); subB.id = 'chartRiskCostOnly';
+riskCostWrap.appendChild(subA); riskCostWrap.appendChild(subB);
+document.getElementById('chartRiskCost').appendChild(riskCostWrap);
+
+verticalBarChart('chartRiskCount',
+  Object.entries(DATA.risk_tier_counts).map(([k,v])=>({label:k, value:v, color:tierColors[k]})),
+  {valueFmt:v=>v.toLocaleString(), tooltipFmt:d=>`${d.value.toLocaleString()} patients (${(100*d.value/DATA.kpis.total_patients).toFixed(1)}%)`});
+
+verticalBarChart('chartRiskCostOnly',
+  Object.entries(DATA.cost_by_tier).map(([k,v])=>({label:k, value:v, color:tierColors[k]})),
+  {valueFmt:v=>'$'+v.toFixed(0), tooltipFmt:d=>`$${d.value.toFixed(2)} avg PMPM cost`});
+
+// ---------- Line chart ----------
+function lineChart(containerId, series, opts){
+  opts = opts || {};
+  const W = 640, H = 200, padL = 42, padR = 14, padTop = 14, padBottom = 22;
+  const plotW = W - padL - padR, plotH = H - padTop - padBottom;
+  const months = opts.xLabels;
+  const allVals = series.flatMap(s=>s.values);
+  const maxVal = opts.maxVal || Math.max(...allVals)*1.12;
+  const minVal = opts.minVal !== undefined ? opts.minVal : 0;
+  const svg = el('svg', {class:'chart', viewBox:`0 0 ${W} ${H}`, preserveAspectRatio:'xMinYMin meet'});
+
+  [0,0.5,1].forEach(t=>{
+    const y = padTop + plotH*(1-t);
+    svg.appendChild(el('line', {class:'gridline', x1:padL, x2:W-padR, y1:y, y2:y}));
+    const val = minVal + t*(maxVal-minVal);
+    const lbl = el('text', {class:'axislabel', x:padL-6, y:y+3, 'text-anchor':'end'});
+    lbl.textContent = opts.tickFmt ? opts.tickFmt(val) : Math.round(val);
+    svg.appendChild(lbl);
+  });
+
+  const xStep = plotW / (months.length - 1);
+  [0, Math.floor(months.length/2), months.length-1].forEach(i=>{
+    const x = padL + i*xStep;
+    const lbl = el('text', {class:'axislabel', x:x, y:H-4, 'text-anchor': i===0?'start':(i===months.length-1?'end':'middle')});
+    lbl.textContent = months[i];
+    svg.appendChild(lbl);
+  });
+
+  const crosshair = el('line', {class:'crosshair', x1:0, x2:0, y1:padTop, y2:padTop+plotH});
+  svg.appendChild(crosshair);
+
+  series.forEach(s=>{
+    let path = '';
+    s.values.forEach((v,i)=>{
+      const x = padL + i*xStep;
+      const y = padTop + plotH*(1 - (v-minVal)/(maxVal-minVal));
+      path += (i===0?'M':'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+    });
+    svg.appendChild(el('path', {d:path, fill:'none', stroke:s.color, 'stroke-width':2, 'stroke-linejoin':'round', 'stroke-linecap':'round'}));
+  });
+
+  // hover targets (invisible wide columns) + points
+  months.forEach((m,i)=>{
+    const x = padL + i*xStep;
+    const hitArea = el('rect', {x:x-xStep/2, y:padTop, width:xStep, height:plotH, fill:'transparent', class:'linepoint'});
+    hitArea.addEventListener('mousemove', e=>{
+      crosshair.setAttribute('x1', x); crosshair.setAttribute('x2', x); crosshair.setAttribute('opacity', 1);
+      let rows = series.map(s=>`<div>${s.name}: <b>${opts.tooltipFmt ? opts.tooltipFmt(s.values[i]) : s.values[i]}</b></div>`).join('');
+      showTooltip(e, `<div class="t-title">${m}</div>${rows}`);
+    });
+    hitArea.addEventListener('mouseleave', ()=>{ crosshair.setAttribute('opacity', 0); hideTooltip(); });
+    svg.appendChild(hitArea);
+  });
+
+  document.getElementById(containerId).appendChild(svg);
+}
+
+const months = DATA.monthly_trend.map(d=>d.month);
+lineChart('chartUtilTrend', [
+  {name:'ED visits', values: DATA.monthly_trend.map(d=>d.ed_visits), color:'var(--accent)'},
+  {name:'Admissions', values: DATA.monthly_trend.map(d=>d.admissions), color:'var(--series-2)'},
+], {xLabels:months, tooltipFmt:v=>v});
+
+lineChart('chartCostTrend', [
+  {name:'Avg PMPM cost', values: DATA.monthly_trend.map(d=>d.avg_pmpm_cost), color:'var(--accent)'},
+], {xLabels:months, minVal:300, maxVal:380, tickFmt:v=>'$'+Math.round(v), tooltipFmt:v=>'$'+v.toFixed(2)});
+</script>

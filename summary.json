@@ -1,0 +1,214 @@
+{
+  "kpis": {
+    "total_patients": 6000,
+    "pct_high_risk": 10.5,
+    "avg_pmpm_cost": 354.75,
+    "readmission_rate_30d": 14.9,
+    "ed_visits_per_1000_per_month": 71.0,
+    "care_gap_closure_rate": 67.2
+  },
+  "condition_prevalence": [
+    {
+      "condition": "Hypertension",
+      "pct": 43.7
+    },
+    {
+      "condition": "Obesity",
+      "pct": 37.1
+    },
+    {
+      "condition": "Diabetes",
+      "pct": 25.5
+    },
+    {
+      "condition": "Depression",
+      "pct": 25.0
+    },
+    {
+      "condition": "Asthma",
+      "pct": 22.0
+    },
+    {
+      "condition": "COPD",
+      "pct": 18.6
+    },
+    {
+      "condition": "CKD",
+      "pct": 17.3
+    },
+    {
+      "condition": "CHF",
+      "pct": 16.4
+    }
+  ],
+  "risk_tier_counts": {
+    "Low": 2969,
+    "Medium": 2399,
+    "High": 632
+  },
+  "monthly_trend": [
+    {
+      "month": "2024-10",
+      "ed_visits": 423,
+      "admissions": 117,
+      "avg_pmpm_cost": 356.2843250923558
+    },
+    {
+      "month": "2024-11",
+      "ed_visits": 401,
+      "admissions": 114,
+      "avg_pmpm_cost": 353.3217979113745
+    },
+    {
+      "month": "2024-12",
+      "ed_visits": 454,
+      "admissions": 98,
+      "avg_pmpm_cost": 355.63330835414934
+    },
+    {
+      "month": "2025-01",
+      "ed_visits": 403,
+      "admissions": 101,
+      "avg_pmpm_cost": 353.4943092010384
+    },
+    {
+      "month": "2025-02",
+      "ed_visits": 410,
+      "admissions": 113,
+      "avg_pmpm_cost": 357.841002556092
+    },
+    {
+      "month": "2025-03",
+      "ed_visits": 399,
+      "admissions": 104,
+      "avg_pmpm_cost": 353.9273304964539
+    },
+    {
+      "month": "2025-04",
+      "ed_visits": 410,
+      "admissions": 102,
+      "avg_pmpm_cost": 356.6750086306099
+    },
+    {
+      "month": "2025-05",
+      "ed_visits": 463,
+      "admissions": 91,
+      "avg_pmpm_cost": 355.73836209335224
+    },
+    {
+      "month": "2025-06",
+      "ed_visits": 452,
+      "admissions": 118,
+      "avg_pmpm_cost": 355.14898612291137
+    },
+    {
+      "month": "2025-07",
+      "ed_visits": 413,
+      "admissions": 127,
+      "avg_pmpm_cost": 356.3823757677275
+    },
+    {
+      "month": "2025-08",
+      "ed_visits": 451,
+      "admissions": 114,
+      "avg_pmpm_cost": 354.7062545761757
+    },
+    {
+      "month": "2025-09",
+      "ed_visits": 446,
+      "admissions": 111,
+      "avg_pmpm_cost": 355.3328108260502
+    },
+    {
+      "month": "2025-10",
+      "ed_visits": 424,
+      "admissions": 88,
+      "avg_pmpm_cost": 351.60578403216545
+    },
+    {
+      "month": "2025-11",
+      "ed_visits": 428,
+      "admissions": 75,
+      "avg_pmpm_cost": 354.7797670502386
+    },
+    {
+      "month": "2025-12",
+      "ed_visits": 460,
+      "admissions": 101,
+      "avg_pmpm_cost": 359.19219630156476
+    },
+    {
+      "month": "2026-01",
+      "ed_visits": 432,
+      "admissions": 98,
+      "avg_pmpm_cost": 354.44292160180487
+    },
+    {
+      "month": "2026-02",
+      "ed_visits": 425,
+      "admissions": 105,
+      "avg_pmpm_cost": 354.59602101675665
+    },
+    {
+      "month": "2026-03",
+      "ed_visits": 409,
+      "admissions": 108,
+      "avg_pmpm_cost": 357.04672444183313
+    },
+    {
+      "month": "2026-04",
+      "ed_visits": 427,
+      "admissions": 99,
+      "avg_pmpm_cost": 351.15767943262415
+    },
+    {
+      "month": "2026-05",
+      "ed_visits": 409,
+      "admissions": 97,
+      "avg_pmpm_cost": 358.06493201133145
+    },
+    {
+      "month": "2026-06",
+      "ed_visits": 419,
+      "admissions": 92,
+      "avg_pmpm_cost": 351.8810213980029
+    },
+    {
+      "month": "2026-07",
+      "ed_visits": 410,
+      "admissions": 90,
+      "avg_pmpm_cost": 349.62455420322675
+    },
+    {
+      "month": "2026-08",
+      "ed_visits": 428,
+      "admissions": 124,
+      "avg_pmpm_cost": 353.1918049615055
+    },
+    {
+      "month": "2026-09",
+      "ed_visits": 429,
+      "admissions": 99,
+      "avg_pmpm_cost": 353.91174643874643
+    }
+  ],
+  "cost_by_tier": {
+    "Low": 166.94,
+    "Medium": 411.45,
+    "High": 924.52
+  },
+  "gap_by_measure": {
+    "Colorectal cancer screening (45-75)": 65.1,
+    "Blood pressure control (hypertensive)": 65.1,
+    "Annual wellness visit": 66.4,
+    "HbA1c screening (diabetics)": 67.7,
+    "Mammography (50-74F)": 68.3,
+    "Annual eye exam (diabetics)": 69.0,
+    "Statin therapy (high CV risk)": 69.0
+  },
+  "gap_by_tier": {
+    "Low": 74.1,
+    "Medium": 63.0,
+    "High": 50.5
+  }
+}
