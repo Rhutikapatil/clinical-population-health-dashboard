@@ -6,6 +6,7 @@
 ![Tableau](https://img.shields.io/badge/Tableau-Data%20Visualization-E97627?logo=tableau&logoColor=white)
 ![HTML](https://img.shields.io/badge/HTML-Interactive%20Dashboard-E34F26?logo=html5&logoColor=white)
 ![Healthcare Analytics](https://img.shields.io/badge/Healthcare-Population%20Health-2E8B57)
+A population health analytics project that combines synthetic healthcare data, Python-based data preparation, interactive visualization, and BI-ready reporting to analyze utilization, cost, risk stratification, and preventive care gaps.
 
 ## Project Highlights
 
