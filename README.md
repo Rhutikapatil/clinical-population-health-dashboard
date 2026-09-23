@@ -7,10 +7,17 @@
 ![HTML](https://img.shields.io/badge/HTML-Interactive%20Dashboard-E34F26?logo=html5&logoColor=white)
 ![Healthcare Analytics](https://img.shields.io/badge/Healthcare-Population%20Health-2E8B57)
 
-A population-health analytics project: a clean patient/utilization/care-gap
-data model, an interactive dashboard preview, and precise Power BI and
-Tableau build guides — for a BI/data-analytics portfolio.
+## Project Highlights
 
+- Built a population health analytics project using synthetic healthcare data
+- Modeled patient, utilization, and preventive care-gap data in a star-schema-style structure
+- Created an interactive dashboard preview using HTML, SVG, and JavaScript
+- Developed Power BI build instructions with reusable DAX measures
+- Developed Tableau build instructions with calculated fields and worksheet logic
+- Analyzed healthcare utilization, cost, risk stratification, and preventive care gaps
+- Produced a stakeholder-focused insights summary for non-technical audiences
+- Designed the project to be reproducible and adaptable to de-identified healthcare datasets
+  
 **Live dashboard preview:** built and published as an interactive HTML
 artifact (see the link shared alongside this project) — six charts and a
 KPI row over the full dataset, with hover tooltips throughout.
