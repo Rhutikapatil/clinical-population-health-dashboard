@@ -1,5 +1,12 @@
 # Clinical Population Health Dashboard
 
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-Business%20Intelligence-F2C811?logo=powerbi&logoColor=black)
+![Tableau](https://img.shields.io/badge/Tableau-Data%20Visualization-E97627?logo=tableau&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-Interactive%20Dashboard-E34F26?logo=html5&logoColor=white)
+![Healthcare Analytics](https://img.shields.io/badge/Healthcare-Population%20Health-2E8B57)
+
 A population-health analytics project: a clean patient/utilization/care-gap
 data model, an interactive dashboard preview, and precise Power BI and
 Tableau build guides — for a BI/data-analytics portfolio.
