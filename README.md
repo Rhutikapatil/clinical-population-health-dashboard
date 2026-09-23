@@ -99,6 +99,24 @@ guide in `build_guides/` to load the three CSVs into Power BI or Tableau.
 Python · pandas/NumPy (data generation) · HTML/SVG/vanilla JS (dashboard
 preview) · Power BI (DAX) · Tableau (calculated fields)
 
+## Skills Demonstrated
+
+- Healthcare and population health analytics
+- Python data analysis with pandas and NumPy
+- Synthetic healthcare data generation
+- Star-schema-style data modeling
+- Healthcare utilization analysis
+- PMPM cost analysis
+- Risk stratification
+- Preventive care-gap analysis
+- Power BI dashboard development
+- DAX measure design
+- Tableau calculated fields
+- Interactive dashboard development
+- Data visualization
+- Stakeholder-focused reporting
+- Reproducible analytics workflows
+
 ## Author
 
 Rhutika Patil — M.S. Bioinformatics, NC State University
