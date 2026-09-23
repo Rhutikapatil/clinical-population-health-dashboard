@@ -143,6 +143,20 @@ preview) · Power BI (DAX) · Tableau (calculated fields)
 - Stakeholder-focused reporting
 - Reproducible analytics workflows
 
+## Project Status
+
+| Component | Status |
+| --- | --- |
+| Synthetic population-health data generation | ✅ Completed |
+| Patient, utilization, and care-gap datasets | ✅ Completed |
+| Interactive HTML dashboard | ✅ Completed |
+| Population health KPI calculations | ✅ Completed |
+| Stakeholder insights summary | ✅ Completed |
+| Power BI build guide and DAX measures | ✅ Included |
+| Tableau build guide and calculated fields | ✅ Included |
+| Native Power BI `.pbix` file | Not included |
+| Native Tableau workbook | Not included |
+
 ## Author
 
 Rhutika Patil — M.S. Bioinformatics, NC State University
