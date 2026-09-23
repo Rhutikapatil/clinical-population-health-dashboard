@@ -21,7 +21,33 @@
 **Live dashboard preview:** built and published as an interactive HTML
 artifact (see the link shared alongside this project) — six charts and a
 KPI row over the full dataset, with hover tooltips throughout.
+## Analytics Workflow
 
+```mermaid
+flowchart LR
+    A[Synthetic Population Generator] --> B[patients.csv]
+    A --> C[utilization_monthly.csv]
+    A --> D[care_gaps.csv]
+
+    B --> E[Python / pandas Analysis]
+    C --> E
+    D --> E
+
+    E --> F[summary.json]
+    F --> G[Interactive HTML Dashboard]
+
+    B --> H[Power BI]
+    C --> H
+    D --> H
+
+    B --> I[Tableau]
+    C --> I
+    D --> I
+
+    G --> J[Population Health Insights]
+    H --> J
+    I --> J
+```
 ## Why it's structured this way
 
 Power BI Desktop and Tableau Desktop are Windows/Mac GUI applications —
